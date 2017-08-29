@@ -11,7 +11,7 @@
   <name>Team Foundation Server Plug-in parent</name>
   <version>5.122.0-SNAPSHOT</version>
   <properties>
-    <jenkins.version>1.625.1</jenkins.version>
+    <jenkins.version>2.60.3</jenkins.version>
     <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
     <!--  overriding old version from parent to be consistent with the above in this project -->
     <maven-surefire-report-plugin.version>${maven-surefire-plugin.version}</maven-surefire-report-plugin.version>

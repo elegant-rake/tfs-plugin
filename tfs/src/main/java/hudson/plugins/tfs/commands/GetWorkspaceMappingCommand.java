@@ -46,6 +46,7 @@ public class GetWorkspaceMappingCommand extends AbstractCallableCommand<String, 
         final String resultMessage = existsMapping ? String.format(FoundResultTemplate, result) : "no.";
         logger.println(resultMessage);
 
+        server.close();
         return result;
     }
 

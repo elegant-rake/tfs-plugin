@@ -91,6 +91,7 @@ public class NewWorkspaceCommand extends AbstractCallableCommand<Void, Exception
         final String createdMessage = String.format(CreatedTemplate, workspaceName);
         logger.println(createdMessage);
 
+        server.close();
         return null;
     }
 }

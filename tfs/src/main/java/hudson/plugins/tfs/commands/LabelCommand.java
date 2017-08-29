@@ -74,6 +74,7 @@ public class LabelCommand extends AbstractCallableCommand<Void, Exception> {
             logger.println(createdMessage);
         }
 
+        server.close();
         return null;
     }
 }

@@ -73,6 +73,7 @@ public class DeleteWorkspaceCommand extends AbstractCallableCommand<Void, IOExce
         final String deletedMessage = String.format(DeletedTemplate, numDeletions, workspaceName);
         logger.println(deletedMessage);
 
+        server.close();
         return null;
     }
 }

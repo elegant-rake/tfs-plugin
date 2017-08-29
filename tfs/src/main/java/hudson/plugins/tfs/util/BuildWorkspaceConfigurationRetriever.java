@@ -46,9 +46,9 @@ public class BuildWorkspaceConfigurationRetriever {
     
     public static class BuildWorkspaceConfiguration extends WorkspaceConfiguration {
         private static final long serialVersionUID = 1L;
-        private final transient AbstractBuild<?, ?> build;
+        private final transient Run<?, ?> build;
         
-        public BuildWorkspaceConfiguration(WorkspaceConfiguration configuration, AbstractBuild<?, ?> build) {
+        public BuildWorkspaceConfiguration(WorkspaceConfiguration configuration, Run<?, ?> build) {
             super(configuration);
             this.build = build;
         }

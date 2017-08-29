@@ -82,6 +82,7 @@ public class ListWorkspacesCommand extends AbstractCallableCommand<List<Workspac
             log(result, logger);
         }
 
+        server.close();
         return result;
     }
 

@@ -288,6 +288,7 @@ public class Server implements ServerConfigurationProvider, Closable {
             } catch (IllegalAccessException ignore) {
             }
             this.tpc.close();
+
         }
     }
 

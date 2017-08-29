@@ -93,6 +93,7 @@ public class RemoteChangesetVersionCommand extends AbstractCallableCommand<Integ
         }
         logger.println(resultMessage);
 
+        server.close();
         return changeSetNumber;
     }
 

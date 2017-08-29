@@ -75,6 +75,7 @@ public class GetFilesToWorkFolderCommand extends AbstractCallableCommand<Void, E
         final String gotMessage = String.format(GotTemplate, versionSpecString, getCount);
         logger.println(gotMessage);
 
+        server.close();
         return null;
     }
 

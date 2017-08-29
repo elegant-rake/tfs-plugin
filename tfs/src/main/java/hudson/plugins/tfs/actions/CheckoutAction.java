@@ -6,11 +6,7 @@ import com.microsoft.tfs.core.clients.versioncontrol.specs.version.VersionSpec;
 import hudson.FilePath;
 import hudson.model.TaskListener;
 import hudson.plugins.tfs.commands.RemoteChangesetVersionCommand;
-import hudson.plugins.tfs.model.ChangeSet;
-import hudson.plugins.tfs.model.Project;
-import hudson.plugins.tfs.model.Server;
-import hudson.plugins.tfs.model.Workspace;
-import hudson.plugins.tfs.model.Workspaces;
+import hudson.plugins.tfs.model.*;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -30,6 +26,14 @@ public class CheckoutAction {
     private final boolean useUpdate;
     private final boolean useOverwrite;
 
+    public CheckoutAction(WorkspaceConfiguration config, boolean useUpdate, boolean useOverwrite) {
+        this.workspaceName = config.getWorkspaceName();
+        this.projectPath = config.getProjectPath();
+        this.cloakedPaths = config.getCloakedPaths();
+        this.localFolder = config.getWorkfolder();
+        this.useUpdate = useUpdate;
+        this.useOverwrite = useOverwrite;
+    }
     public CheckoutAction(String workspaceName, String projectPath, Collection<String> cloakedPaths, String localFolder, boolean useUpdate, boolean useOverwrite) {
         this.workspaceName = workspaceName;
         this.projectPath = projectPath;
