@@ -41,7 +41,6 @@ import hudson.util.FormValidation;
 import hudson.util.LogTaskListener;
 import hudson.util.Scrambler;
 import hudson.util.Secret;
-import hudson.util.VariableResolver;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -51,10 +50,10 @@ import org.kohsuke.stapler.StaplerRequest;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
@@ -361,9 +360,16 @@ public class TeamFoundationServerScm extends SCM {
         setWorkspaceChangesetVersion(Integer.toString(buildChangeset, 10));
 
         // by adding this action, we prevent calcRevisionsFromBuild() from being called
-//        build.addAction(new TFSRevisionState(buildChangeset, projectPath));
+        build.addAction(new TFSRevisionState(buildChangeset, projectPath));
 
         return buildChangeset;
+    }
+
+
+    @CheckForNull
+    @Override
+    public SCMRevisionState calcRevisionsFromBuild(@Nonnull Run<?, ?> build, @Nullable FilePath workspace, @Nullable Launcher launcher, @Nonnull TaskListener listener) throws IOException, InterruptedException {
+        return SCMRevisionState.NONE;
     }
 
     void setWorkspaceChangesetVersion(String workspaceChangesetVersion) {
@@ -389,7 +395,7 @@ public class TeamFoundationServerScm extends SCM {
 
     @Override
     public ChangeLogParser createChangeLogParser() {
-        return new ChangeSetReader();
+        return new ChangeSetReader(repositoryBrowser);
     }
 
     @Override

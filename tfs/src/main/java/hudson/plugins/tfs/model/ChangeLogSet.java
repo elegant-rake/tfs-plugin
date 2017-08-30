@@ -3,6 +3,8 @@ package hudson.plugins.tfs.model;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.model.AbstractBuild;
+import hudson.model.Run;
+import hudson.plugins.tfs.browsers.TeamFoundationServerRepositoryBrowser;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,8 +21,8 @@ public class ChangeLogSet extends hudson.scm.ChangeLogSet<ChangeSet> {
 
     private final List<ChangeSet> changesets;
 
-    public ChangeLogSet(AbstractBuild build, List<ChangeSet> changesets) {
-        super(build);
+    public ChangeLogSet(Run build, TeamFoundationServerRepositoryBrowser browser, List<ChangeSet> changesets) {
+        super(build, browser);
         this.changesets = changesets;
         for (ChangeSet changeset : changesets) {
             changeset.setParent(this);

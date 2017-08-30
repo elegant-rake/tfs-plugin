@@ -10,6 +10,9 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import hudson.model.Run;
+import hudson.plugins.tfs.browsers.TeamFoundationServerRepositoryBrowser;
+import hudson.scm.RepositoryBrowser;
 import org.apache.commons.digester.Digester;
 import org.xml.sax.SAXException;
 
@@ -26,6 +29,17 @@ import hudson.util.Digester2;
  */ 
 public class ChangeSetReader extends ChangeLogParser {
 
+    private TeamFoundationServerRepositoryBrowser browser;
+    public ChangeSetReader(TeamFoundationServerRepositoryBrowser repositoryBrowser) {
+        this.browser = repositoryBrowser;
+    }
+    @Override
+    public hudson.scm.ChangeLogSet<? extends hudson.scm.ChangeLogSet.Entry> parse(Run build, RepositoryBrowser<?> browser, File changelogFile) throws IOException, SAXException {
+        try (FileInputStream stream = new FileInputStream(changelogFile); Reader reader = new InputStreamReader(stream, Charset.defaultCharset())) {
+            return parse(build, reader);
+        }
+    }
+
     @Override
     public ChangeLogSet parse(AbstractBuild build, File changelogFile) throws IOException, SAXException {
         try (FileInputStream stream = new FileInputStream(changelogFile); Reader reader = new InputStreamReader(stream, Charset.defaultCharset())) {
@@ -33,7 +47,7 @@ public class ChangeSetReader extends ChangeLogParser {
         }
     }
 
-    public ChangeLogSet parse(AbstractBuild<?,?> build, Reader reader) throws IOException, SAXException {
+    public ChangeLogSet parse(Run build, Reader reader) throws IOException, SAXException {
         List<ChangeSet> changesetList = new ArrayList<ChangeSet>();
         Digester digester = new Digester2();
         digester.push(changesetList);
@@ -53,6 +67,6 @@ public class ChangeSetReader extends ChangeLogParser {
         
         digester.parse(reader);
 
-        return new ChangeLogSet(build, changesetList);
+        return new ChangeLogSet(build, browser, changesetList);
     }
 }
