@@ -21,6 +21,13 @@ public class ChangeLogSet extends hudson.scm.ChangeLogSet<ChangeSet> {
 
     private final List<ChangeSet> changesets;
 
+    public ChangeLogSet(AbstractBuild build, List<ChangeSet> changesets) {
+        super(build);
+        this.changesets = changesets;
+        for (ChangeSet changeset : changesets) {
+            changeset.setParent(this);
+        }
+    }
     public ChangeLogSet(Run build, TeamFoundationServerRepositoryBrowser browser, List<ChangeSet> changesets) {
         super(build, browser);
         this.changesets = changesets;

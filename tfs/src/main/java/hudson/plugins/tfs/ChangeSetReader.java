@@ -30,6 +30,9 @@ import hudson.util.Digester2;
 public class ChangeSetReader extends ChangeLogParser {
 
     private TeamFoundationServerRepositoryBrowser browser;
+    public ChangeSetReader() {
+
+    }
     public ChangeSetReader(TeamFoundationServerRepositoryBrowser repositoryBrowser) {
         this.browser = repositoryBrowser;
     }

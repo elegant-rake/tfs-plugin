@@ -10,11 +10,7 @@ import java.util.logging.Logger;
 
 import hudson.Launcher;
 import hudson.Util;
-import hudson.model.AbstractBuild;
-import hudson.model.AbstractProject;
-import hudson.model.Computer;
-import hudson.model.Job;
-import hudson.model.TaskListener;
+import hudson.model.*;
 import hudson.util.VariableResolver;
 
 /**
@@ -51,11 +47,11 @@ public class BuildVariableResolver implements VariableResolver<String> {
         });
     }
     
-    public BuildVariableResolver(final AbstractProject<?, ?> project, final Computer computer) {
+    public BuildVariableResolver(final Run<?, ?> project, final Computer computer) {
         this.computer = computer;
         lazyResolvers.put("JOB_NAME", new LazyResolver() {
             public String getValue() {
-                return project.getName();
+                return project.getDisplayName();
             }            
         });
         lazyResolvers.put("NODE_NAME", new LazyComputerResolver() {
@@ -84,7 +80,7 @@ public class BuildVariableResolver implements VariableResolver<String> {
      */
     public BuildVariableResolver(final AbstractBuild<?, ?> build, final Computer computer)
             throws IOException, InterruptedException {
-        this(build.getProject(), computer);
+        this((Run<?,?>)build, computer);
         
         final Map<String, String> envVars = build.getEnvironment(TaskListener.NULL);
         if (envVars != null) {
