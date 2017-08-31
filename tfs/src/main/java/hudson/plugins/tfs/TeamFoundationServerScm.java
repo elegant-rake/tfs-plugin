@@ -6,14 +6,7 @@ import com.microsoft.tfs.core.clients.versioncontrol.specs.version.ChangesetVers
 import com.microsoft.tfs.core.clients.versioncontrol.specs.version.DateVersionSpec;
 import com.microsoft.tfs.core.clients.versioncontrol.specs.version.VersionSpec;
 import hudson.*;
-import hudson.model.AbstractBuild;
-import hudson.model.AbstractProject;
-import hudson.model.BuildListener;
-import hudson.model.Computer;
-import hudson.model.Node;
-import hudson.model.ParametersAction;
-import hudson.model.Run;
-import hudson.model.TaskListener;
+import hudson.model.*;
 import hudson.plugins.tfs.actions.CheckoutAction;
 import hudson.plugins.tfs.actions.RemoveWorkspaceAction;
 import hudson.plugins.tfs.browsers.TeamFoundationServerRepositoryBrowser;
@@ -288,8 +281,9 @@ public class TeamFoundationServerScm extends SCM {
     @Override
     public void checkout(@Nonnull Run<?, ?> build, @Nonnull Launcher launcher, @Nonnull FilePath workspace, @Nonnull TaskListener listener, @CheckForNull File changelogFile, @CheckForNull SCMRevisionState baseline) throws IOException, InterruptedException {
         Server server = createServer(launcher, listener, build);
+        Computer c = build.getExecutor().getOwner();
         try {
-            WorkspaceConfiguration workspaceConfiguration = new WorkspaceConfiguration(server.getUrl(), getWorkspaceName(build, Computer.currentComputer()), getProjectPath(), getCloakedPathsCollection(), getLocalPath());
+            WorkspaceConfiguration workspaceConfiguration = new WorkspaceConfiguration(server.getUrl(), getWorkspaceName(build, c), getProjectPath(), getCloakedPathsCollection(), getLocalPath());
 
             Run<?,?> previousBuild = build.getPreviousBuild();
 

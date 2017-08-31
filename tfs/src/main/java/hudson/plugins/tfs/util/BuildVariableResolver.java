@@ -47,11 +47,12 @@ public class BuildVariableResolver implements VariableResolver<String> {
         });
     }
     
-    public BuildVariableResolver(final Run<?, ?> project, final Computer computer) {
+    public BuildVariableResolver(final Run<?, ?> run, final Computer computer) {
         this.computer = computer;
+
         lazyResolvers.put("JOB_NAME", new LazyResolver() {
             public String getValue() {
-                return project.getDisplayName();
+                return run.getParent().getDisplayName();
             }            
         });
         lazyResolvers.put("NODE_NAME", new LazyComputerResolver() {
