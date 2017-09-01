@@ -281,7 +281,7 @@ public class TeamFoundationServerScm extends SCM {
     @Override
     public void checkout(@Nonnull Run<?, ?> build, @Nonnull Launcher launcher, @Nonnull FilePath workspace, @Nonnull TaskListener listener, @CheckForNull File changelogFile, @CheckForNull SCMRevisionState baseline) throws IOException, InterruptedException {
         Server server = createServer(launcher, listener, build);
-        Computer c = build.getExecutor().getOwner();
+        Computer c = workspace.toComputer();
         try {
             WorkspaceConfiguration workspaceConfiguration = new WorkspaceConfiguration(server.getUrl(), getWorkspaceName(build, c), getProjectPath(), getCloakedPathsCollection(), getLocalPath());
 
